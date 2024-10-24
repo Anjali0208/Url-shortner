@@ -1,10 +1,14 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const urlRoute = require("./routes/url");
-const staticRoute = require("./routes/staticRouter");
+
 const { connectToMongoDb } = require("./db/conn");
 const path = require("path");
 const URL = require("./models/url");
+
+// routes import
+const urlRoute = require("./routes/url");
+const staticRoute = require("./routes/staticRouter");
+const userRoute = require("./routes/user");
 
 const app = express();
 
@@ -33,7 +37,8 @@ app.use(express.urlencoded({ extended: false }));
 
 // Routes
 app.use("/url", urlRoute);
-app.get("/", staticRoute);
+app.use("/user", userRoute);
+app.use("/", staticRoute);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
